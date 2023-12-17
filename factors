@@ -1,53 +1,32 @@
 #!/usr/bin/python3
-
+# library to get arguments
 import sys
 
 
-def factorize_number(n):
+# fn unpack number factorial
+def fc():
     """
-    Factorize a number and print the result in the format n = p * q.
-    """
-    if n % 2 == 0:
-        print("{}={}*{}".format(n, n // 2, 2))
-        return
-
-    i = 3
-    while i <= n // 2:
-        if n % i == 0:
-            print("{}={}*{}".format(n, n // i, i))
-            return
-        i += 2
-
-    print("{}={}*{}".format(n, n, 1))
-
-
-def factorize_file(file_path):
-    """
-    Read numbers from a file and factorize each one.
+    function fc to search file to convert number and format n=p*q
     """
     try:
-        with open(file_path) as f:
-            for number in f:
-                number = int(number.strip())
-                factorize_number(number)
-    except FileNotFoundError:
-        print("Error: File not found.")
-    except ValueError:
-        print("Error: Invalid input in the file.")
+        revfile = sys.argv[1]
+        with open(revfile) as f:
+            for revnumber in f:
+                revnumber = int(revnumber)
+                if revnumber % 2 == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // 2, 2))
+                        continue
+                i = 3
+                while i < revnumber // 2:
+                    if revnumber % i == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // i, i))
+                        break
+                    i = i + 2
+                if i == (revnumber // 2) + 1:
+                    print("{}={}*{}".format(revnumber, revnumber, 1))
+    except (IndexError):
+        pass
 
 
-def main():
-    """
-    Main function to handle command line arguments.
-    """
-    if len(sys.argv) != 2:
-        print("Usage: {} <file>".format(sys.argv[0]))
-        sys.exit(1)
-
-    file_path = sys.argv[1]
-    factorize_file(file_path)
-
-
-if __name__ == "__main__":
-    main()
-
+# autostart
+fc()
