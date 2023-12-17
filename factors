@@ -1,34 +1,53 @@
 #!/usr/bin/python3
 
-def factorize(n):
-    for i in range(2, n // 2 + 1):
-        if n % i == 0:
-            factor1 = i
-            factor2 = n // i
-            print(f"{n}={factor2}*{factor1}")
-            return
+import sys
 
-    # If no factors found, the number is prime
-    print(f"{n} is a prime number")
+
+def factorize_number(n):
+    """
+    Factorize a number and print the result in the format n = p * q.
+    """
+    if n % 2 == 0:
+        print("{}={}*{}".format(n, n // 2, 2))
+        return
+
+    i = 3
+    while i <= n // 2:
+        if n % i == 0:
+            print("{}={}*{}".format(n, n // i, i))
+            return
+        i += 2
+
+    print("{}={}*{}".format(n, n, 1))
+
+
+def factorize_file(file_path):
+    """
+    Read numbers from a file and factorize each one.
+    """
+    try:
+        with open(file_path) as f:
+            for number in f:
+                number = int(number.strip())
+                factorize_number(number)
+    except FileNotFoundError:
+        print("Error: File not found.")
+    except ValueError:
+        print("Error: Invalid input in the file.")
+
 
 def main():
-    import sys
-
+    """
+    Main function to handle command line arguments.
+    """
     if len(sys.argv) != 2:
         print("Usage: {} <file>".format(sys.argv[0]))
         sys.exit(1)
 
     file_path = sys.argv[1]
+    factorize_file(file_path)
 
-    try:
-        with open(file_path, 'r') as file:
-            for line in file:
-                number = int(line.strip())
-                factorize(number)
-
-    except FileNotFoundError:
-        print("Error: File not found.")
-        sys.exit(1)
 
 if __name__ == "__main__":
     main()
+
