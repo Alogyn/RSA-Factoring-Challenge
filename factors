@@ -1,32 +1,38 @@
-#!/usr/bin/python3
-# library to get arguments
-import sys
+#!/usr/bin/env python3
+""" Factor numbers """
+from sys import argv
+from math import sqrt
 
 
-# fn unpack number factorial
-def fc():
+def open_read_file(file_name):
+    """read from file
+    add to array
     """
-    function fc to search file to convert number and format n=p*q
+    with open(file_name, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    number_to_factor = []
+    for line in lines:
+        number_to_factor.append(int(line))
+    return number_to_factor
+
+
+def find_and_times(n):
+    """factor each
+    n given
     """
-    try:
-        revfile = sys.argv[1]
-        with open(revfile) as f:
-            for revnumber in f:
-                revnumber = int(revnumber)
-                if revnumber % 2 == 0:
-                        print("{}={}*{}".format(revnumber, revnumber // 2, 2))
-                        continue
-                i = 3
-                while i < revnumber // 2:
-                    if revnumber % i == 0:
-                        print("{}={}*{}".format(revnumber, revnumber // i, i))
-                        break
-                    i = i + 2
-                if i == (revnumber // 2) + 1:
-                    print("{}={}*{}".format(revnumber, revnumber, 1))
-    except (IndexError):
-        pass
+    for i in range(1, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
 
 
-# autostart
-fc()
+def fac_list(ls):
+    """factor each
+    num in ls
+    """
+    for i in ls:
+        find_and_times(i)
+
+
+if len(argv) == 2:
+    fac_list(open_read_file(argv[1]))
